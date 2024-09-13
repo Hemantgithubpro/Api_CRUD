@@ -27,7 +27,7 @@ The File Storage API is a robust backend solution for managing file uploads, ret
 3. Create a `.env` file in the root directory and add the following:
    ```
    PORT=3000
-   MONGO_URI=mongodb://localhost/fileStorage
+   MONGO_URI=mongodb://localhost:27010/fileStorage
    ```
 
 ## Usage
