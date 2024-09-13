@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect("mongodb://localhost:27010/Api_CRUD", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
