@@ -36,23 +36,17 @@ exports.getFile = async (req, res, next) => {
 
 exports.updateFile = async (req, res, next) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
     const file = await File.findById(req.params.id);
     if (!file) {
       return res.status(404).json({ message: 'File not found' });
     }
 
-    // Remove the old file
-    await fs.unlink(file.path);
-
-    // Update file information
-    file.filename = req.file.filename;
-    file.originalName = req.file.originalname;
-    file.path = req.file.path;
-    file.uploadDate = Date.now();
+    if (req.body.filename) {
+      file.filename = req.body.filename;
+    }
+    if (req.body.originalName) {
+      file.originalName = req.body.originalName;
+    }
 
     await file.save();
     res.json({ message: 'File updated successfully' });
@@ -68,10 +62,8 @@ exports.deleteFile = async (req, res, next) => {
       return res.status(404).json({ message: 'File not found' });
     }
 
-    // Remove the file from the file system
     await fs.unlink(file.path);
 
-    // Remove the file entry from the database
     await File.findByIdAndDelete(req.params.id);
 
     res.json({ message: 'File deleted successfully' });
